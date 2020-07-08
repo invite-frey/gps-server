@@ -1,4 +1,4 @@
-# Server to Receive Tracking Data from Xexun Trackers
+# Tracking Data Server for Xexun Trackers
 
 A simple NodeJS server to receive tracking data from the popular Xexun trackers, including but not limited to the following:
 
