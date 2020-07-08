@@ -6,6 +6,7 @@ const env = require('./env')
 const xt009 = require('./xt009-fields.js')
 const gprmc = require('./gprmc-fields')
 const xexunCommand = require('./xexun-commands-fields')
+//Send commands to the tracker at this interval in seconds
 const xexunDataInterval = 30
 
 xt009.on('success', (data) => {
@@ -26,7 +27,6 @@ xexunCommand.on('success', (data) => {
     }
 })
 
-
 const dataIntervalString = xexunDataInterval < 100 ? `0${xexunDataInterval}s` : `${xexunDataInterval}s`
 const admin_pwd = '123456'
 const gps_setting_commands = [
@@ -46,4 +46,6 @@ module.exports.init = () => {
     database.connect(env.mysql)
     influx.connect(env.influx,xexunDataInterval)
 }
+
+//Provide the models in order of preference if the received data might be parsable with more than one model
 module.exports.models = [xt009,gprmc,xexunCommand]

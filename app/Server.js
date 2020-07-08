@@ -30,6 +30,7 @@ class Server {
                         if (line.length>0) {
                             if(DEBUG) console.log(`${client.name}:`);
                             if(DEBUG) console.log(line)
+                            //Try the provided models until one manages to parse the given data successfully
                             bus.models.some( model => {
                                 const parsed = parser(line,model)
                                 if(parsed){
