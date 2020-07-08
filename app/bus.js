@@ -7,7 +7,7 @@ const auth = require('./auth')
 const xt009 = require('./xt009-fields.js')
 const gprmc = require('./gprmc-fields')
 const xexunCommand = require('./xexun-commands-fields')
-//Send commands to the tracker at this interval in seconds
+//Ask the tracker to send back data at this interval
 const xexunDataInterval = 30
 
 xt009.on('success', (data) => {

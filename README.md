@@ -54,6 +54,13 @@ You can also start the server from any terminal:
 $ node app.js
 ```
 
+### Sending Commands to Tracker
+
+Edit bus.js and set the following constants:
+
+* admin_pwd //The admin password you have set for your tracker. The dafault is 123456
+* gps_setting_commands //An array with commands to send to the tracker each time it calls your server.
+
 ### Security
 
 Note that the Xexun trackers communicate over TCP/IP in clear text. This means all information transmitted is liable to be intercepted by a third party. Currently there is no version of the firmware that supports encrypted communication. This may make this server and all Xexun trackers unsuitable for commercial implementations with strict security requirements.
