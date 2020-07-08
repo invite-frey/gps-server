@@ -3,6 +3,7 @@ const DEBUG = process.env.DEBUG ? process.env.DEBUG==='YES' : true
 const database = require('./mysql-database.js')
 const influx = require('./influx-database')
 const env = require('./env')
+const auth = require('./auth')
 const xt009 = require('./xt009-fields.js')
 const gprmc = require('./gprmc-fields')
 const xexunCommand = require('./xexun-commands-fields')
@@ -11,14 +12,19 @@ const xexunDataInterval = 30
 
 xt009.on('success', (data) => {
     if(DEBUG) console.log("Successfully parsed xt009 data:", data)
-    database.write(data,xt009)
-    influx.write(data,xt009)
+    if( auth.verify(data.imei) ){
+        database.write(data,xt009)
+        influx.write(data,xt009)
+    }
 })
 
 gprmc.on('success', (data) => {
     if(DEBUG) console.log("Successfully parsed GPRMC data:", data)
-    database.write(data,gprmc)
-    influx.write(data,gprmc)
+    //GRPMC data itself does not include any information identifying the unit, so access can only be limited based on ip address
+    if( auth.verify(data.ip) ){
+        database.write(data,gprmc)
+        influx.write(data,gprmc)
+    }
 })
 
 xexunCommand.on('success', (data) => {

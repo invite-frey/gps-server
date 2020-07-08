@@ -12,5 +12,8 @@ const influxdb = {
     database: process.env.DB || "gps"
 }
 
+const unitIds = process.env.UNIT_IDS ? process.env.UNIT_IDS.split(',') : []
+
 module.exports.mysql = mysql
 module.exports.influx = influxdb
+module.exports.unitIds = unitIds
