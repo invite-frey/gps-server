@@ -1,0 +1,4 @@
+#!/bin/bash
+exec 2>&1
+cd /var/apps/gps-server/app
+exec envdir /etc/service/gps-server/env envuidgid nodeapp /usr/bin/node /var/apps/gps-server/app/app.js
