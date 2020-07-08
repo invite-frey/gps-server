@@ -74,7 +74,7 @@ $ node app.js
 
 ### Sending Commands to Tracker
 
-Edit bus.js and set the following constants:
+Edit [bus.js](app/bus.js) and set the following constants:
 
 * admin_pwd //The admin password you have set for your tracker. The dafault is 123456
 * gps_setting_commands //An array with commands to send to the tracker each time it calls your server.
@@ -83,7 +83,7 @@ Edit bus.js and set the following constants:
 
 Note that the Xexun trackers communicate over TCP/IP in clear text. This means all information transmitted is liable to be intercepted by a third party. Currently there is no version of the firmware that supports encrypted communication. This may make this server and all Xexun trackers unsuitable for commercial implementations with strict security requirements.
 
-In order to limit which trackers are able to write to the database you can implement your own authentication in auth.js. The file has one function verify(string). The string parameter is any string that can identify a tracker, by default it's the imei code for the tracker.
+In order to limit which trackers are able to write to the database you can implement your own authentication in [auth.js](app/auth.js). The file has one function verify(string). The string parameter is any string that can identify a tracker, by default it's the imei code for the tracker.
 
 The server checks that the data received matches a valid set of data produced by a Xexun tracker, before it forwards it to be written into the database. 
 
