@@ -26,13 +26,31 @@ If you don't need InfluxDB or MySQL, simply remove all references to either one 
 
 ### Installation
 
-Get the files
+#### Get the files
 
 ```
 https://github.com/invite-frey/wvc-inverter.git
 ```
 
-If you are using daemontools:
+#### Setup a MySQL Database
+
+Create a MySQL database
+
+```
+$ mysql -u youruser -p
+mysql> CREATE DATABASE gps;
+mysql> GRANT ALL PRIVILEGES ON gps.* to yourdbuser@localhost IDENTIFIED BY 'yoursecretpassword';
+mysql> FLUSH PRIVILEGES;
+mysql> exit
+```
+  
+Create the database table using the schema in the [db_schema.sql](db_schema.sql) file.
+
+```
+$ mysql -u youruser -p gps < db_schema.sql
+```
+
+#### If you are using daemontools:
 
 * Update the files in service/env to match your own setup
 * Link the service directory to your system's service directory
@@ -48,7 +66,7 @@ $ sudo svstat /etc/service/gps-server
 /etc/service/gps-server: up (pid 28000) 19770527 seconds
 ```
 
-You can also start the server from any terminal:
+#### You can also start the server from any terminal:
 
 ```
 $ node app.js
