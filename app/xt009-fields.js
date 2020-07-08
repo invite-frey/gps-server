@@ -1,3 +1,6 @@
+/**
+ * Model for receiving tracking data from Xexun tracker.
+ */
 'use strict';
 
 const actions = {

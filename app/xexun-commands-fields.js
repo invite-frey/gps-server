@@ -1,3 +1,7 @@
+/**
+ * Model for sending commands to tracker.
+ */
+
 'use strict';
 
 const actions = {
@@ -6,7 +10,9 @@ const actions = {
     'timeout': () => {}
 }
 
-//Regexes to validate the comma separated fields received from a client
+/**
+ * Regexes to validate the comma separated fields received from a client
+ */
 const commandResponseRegex = [
     '[\\s\\*a-zA-Z0-9]{1,} ok'
 ]

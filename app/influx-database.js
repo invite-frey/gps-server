@@ -4,9 +4,16 @@ let connection = null
 let tachometerTick = 30
 const gsMin = 1
 
+
 function isNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
   }
+
+/**
+ * Create an InfluxDB compatible Date from a date string received from the tracker.
+ * 
+ * @param {*} data A string containing the date.
+ */
 
 function influxDate(data){
     
@@ -23,6 +30,13 @@ function influxDate(data){
     }
 
 }
+
+/**
+ * Connect to InfluxDB
+ * 
+ * @param {*} config Config params. 
+ * @param {*} dataInterval The interval to measure speed at.
+ */
 
 const connect = (config,dataInterval=30) => {
     if(!config){
@@ -49,7 +63,15 @@ const connect = (config,dataInterval=30) => {
     )
 }
 
-const write = (records,model,retry) => {
+/**
+ * Write to InfluxDB
+ * 
+ * @param {*} records The records to write.
+ * 
+ * @returns Promise that resolves on completion.
+ */
+
+const write = (records) => {
     if( connection ){
         const filteredRecords = records.filter( (r) => {
             return isNumeric(r.gs)
@@ -98,4 +120,4 @@ const disconnect = () => {
 
 module.exports.connect = connect
 module.exports.disconnect = disconnect
-module.exports.write = (record,model) => write([record],model,0)
+module.exports.write = (record,model) => write([record])

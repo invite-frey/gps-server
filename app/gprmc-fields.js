@@ -6,7 +6,9 @@ const actions = {
     'timeout': () => {}
 }
 
-//Regexes to validate the comma separated fields received from a client
+/**
+ * Regexes to validate the comma separated fields received from a client 
+ */
 
 const regexes = [
     'GPRMC',							//NMEA identifier http://www.gpsinformation.org/dale/nmea.htm#2.3
@@ -40,6 +42,10 @@ const labels = [
     'mode', 	                        //Mode indicator http://www.hemispheregps.com/gpstechinfo/GPRMC.htm
 ]
 
+/**
+ * Map the data fields from the tracker to database fields.
+ */
+
 const databaseMap = {
     utc: 'gprmc_time',
     status: 'gprmc_status',
@@ -59,6 +65,14 @@ const on = (action, callback) => {
     actions[action] = callback
 }
 
+/**
+ * Verify checksum for a data string.
+ * 
+ * @param {*} rawData The data string, including the checksum received from the tracker.
+ * 
+ * @returns true|false Result of checksum verification.
+ */
+
 const verify = (rawData) => {
     const matches = rawData.match(/\*[A-Fa-f0-9]{2}/)
     if(matches && matches.length === 1){
@@ -68,6 +82,15 @@ const verify = (rawData) => {
     }
     return false
 }
+
+/**
+ * Verify checksum of received dataset.
+ * 
+ * @param {*} cmd The string to calculate the checksum for.
+ * @param {*} receivedChecksum The received checksum.
+ * 
+ * @returns true|false Result of checksum verification.
+ */
 
 const verifyChecksum = (cmd,receivedChecksum) =>
 {

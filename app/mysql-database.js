@@ -4,6 +4,16 @@ const maxRetries = 60
 let pool = null
 let propertyToFieldMap = null
 
+/**
+ * Perform MySWL query
+ * 
+ * @param {*} connection The connection object.
+ * @param {*} sql The sql query.
+ * @param {*} args Any arguments.
+ * 
+ * @returns Promise that resolves on completion.
+ */
+
 const query = (connection,sql,args) => {
     return new Promise( ( resolve, reject ) => {
         connection.query( sql, args, ( err, rows ) => {
@@ -13,6 +23,13 @@ const query = (connection,sql,args) => {
         } );
     } );
 }
+
+/**
+ * Create an object where the parsed properties have been mapped to appropriate database table field names according to the model.
+ * 
+ * @param {*} record The record to map.
+ * @param {*} model A model containing the database map.
+ */
 
 const mappedObject = (record,model) => {
     const mapped =  Object.keys(model.databaseMap).reduce( (result, key) => {
@@ -41,6 +58,12 @@ const mappedObject = (record,model) => {
     return mapped
 }
 
+/**
+ * Connect to MySQL database
+ * 
+ * @param {*} config MySQL database config params.
+ */
+
 const connect = (config) => {
     if(!config){
         throw "Unable to use null config for mysql."
@@ -49,11 +72,25 @@ const connect = (config) => {
     pool = mysql.createPool(config)
 }
 
+/**
+ * Disconnect from MySQL database
+ */
+
 const disconnect = () => {
     pool.end( (err) => {
         if(DEBUG) console.log('Mysql database disconnected.')
     })
 }
+
+/**
+ * Try writing to the database until max rewrites have been exhausted.
+ * 
+ * @param {*} records The records to write.
+ * @param {*} model The model to use.
+ * @param {*} retry Number of retirs attempted.
+ * @param {*} resolve Function to execute on success.
+ * @param {*} reject Function to execute on error thrown.
+ */
 
 const retryWrite = (records,model,retry,resolve,reject) => {
     setTimeout(() => {
@@ -62,6 +99,14 @@ const retryWrite = (records,model,retry,resolve,reject) => {
             .catch(reject)
     },1000*(retry+1))
 }
+
+/**
+ * Write to database.
+ * 
+ * @param {*} records Records to write.
+ * @param {*} model Model to use for mapping.
+ * @param {*} retry Number of retries attempted.
+ */
 
 const write = (records,model,retry) => {
 

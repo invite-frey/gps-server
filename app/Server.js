@@ -4,6 +4,10 @@ const net = require('net');
 const parser = require('./parse.js')
 const Client = require('./Client'); // importing Client class
 
+/**
+ * Server to listen for connections from trackers.
+ */
+
 class Server {
     constructor(port, address) {
         this.port = port || 5000;
@@ -12,6 +16,11 @@ class Server {
         this.clients = [];
     }
  
+    /**
+     * Starts the server
+     * @param {*} bus The data bus to connect to for handling incoming data.
+     */
+
     start(bus) {
         return new Promise((resolve) => {
             let server = this;

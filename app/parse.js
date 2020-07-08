@@ -1,6 +1,15 @@
 'use strict';
 const DEBUG = process.env.DEBUG ? process.env.DEBUG==='YES' : true
 
+/**
+ * Parse a line received by the server
+ * 
+ * @param {*} line The line to parse. Comma separated values, no new line character.
+ * @param {*} param1 An object containing the regex to use when parsing the line and labels for the fields matching the regex.
+ * 
+ * @returns object|null Object with each value associated to the respective field name as determined by the labels provided. Null on failure.
+ */
+
 const line = (line,{regex:fieldRegexes,labels:fieldLabels,verify,actions}) => {
     
     const lineRegexpString = fieldRegexes.length>1 ? '('+fieldRegexes.join(')?,(')+')?' : fieldRegexes

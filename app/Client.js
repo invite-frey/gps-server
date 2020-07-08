@@ -1,6 +1,10 @@
 'use strict';
 const DEBUG = process.env.DEBUG ? process.env.DEBUG==='YES' : true
 
+/**
+ * TCP/IP Client
+ */
+
 class Client {
   
   constructor (socket) {

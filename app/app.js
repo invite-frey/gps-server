@@ -1,9 +1,19 @@
+/**
+ * Tracking Data Server for Xexun Trackers
+ * 
+ * (c)2020 Invite Services/Frey
+ */
+
 'use strict';
 const DEBUG = process.env.DEBUG ? process.env.DEBUG==='YES' : true
 const Server = require('./Server');
 const bus = require('./bus.js')
 bus.init()
 initServer()
+
+/**
+ * Starts the server and sets everything up
+ */
 
 async function initServer() {
   try {

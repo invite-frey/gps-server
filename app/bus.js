@@ -7,8 +7,39 @@ const auth = require('./auth')
 const xt009 = require('./xt009-fields.js')
 const gprmc = require('./gprmc-fields')
 const xexunCommand = require('./xexun-commands-fields')
-//Ask the tracker to send back data at this interval
+
+/**
+ * Ask the tracker to report position at this interval in seconds.
+ */
+
 const xexunDataInterval = 30
+
+/**
+ * Make a string out of the reporting interval
+ */
+
+const dataIntervalString = xexunDataInterval < 100 ? `0${xexunDataInterval}s` : `${xexunDataInterval}s`
+
+/**
+ * Tracker password
+ */
+
+const admin_pwd = '123456'
+
+/**
+ * Commands to send to the tracker each time it opens a new TCP/IP connection
+ */
+
+const gps_setting_commands = [
+	{command: `t${dataIntervalString}***n`, value: ''},
+	{command: 'tlimit', value: '0'},
+    {command: 'readsd', value: '1'},
+    {command: 'sdlog', value: '1'}
+]
+
+/**
+ * Event on server receiving data and parsing a valid Xexun data string.
+ */
 
 xt009.on('success', (data) => {
     if(DEBUG) console.log("Successfully parsed xt009 data:", data)
@@ -17,6 +48,10 @@ xt009.on('success', (data) => {
         influx.write(data,xt009)
     }
 })
+
+/**
+ * Event on server receiving data and parsing a valid GPRMC data set from the data.
+ */
 
 gprmc.on('success', (data) => {
     if(DEBUG) console.log("Successfully parsed GPRMC data:", data)
@@ -27,20 +62,17 @@ gprmc.on('success', (data) => {
     }
 })
 
+/**
+ * Event after the tracker reports successfully having executed a command.
+ */
+
 xexunCommand.on('success', (data) => {
     if(DEBUG){
         console.log("Xexun command successful: " + data.message)
     }
 })
 
-const dataIntervalString = xexunDataInterval < 100 ? `0${xexunDataInterval}s` : `${xexunDataInterval}s`
-const admin_pwd = '123456'
-const gps_setting_commands = [
-	{command: `t${dataIntervalString}***n`, value: ''},
-	{command: 'tlimit', value: '0'},
-    {command: 'readsd', value: '1'},
-    {command: 'sdlog', value: '1'}
-]
+
 
 const getCommandsOnConnect = (unitId) => {
     return gps_setting_commands.map( cmd => `${cmd.command}${admin_pwd} ${cmd.value}`)
