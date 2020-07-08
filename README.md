@@ -29,8 +29,9 @@ If you don't need InfluxDB or MySQL, simply remove all references to either one 
 #### Get the files
 
 ```
-https://github.com/invite-frey/wvc-inverter.git
+$ wget https://github.com/invite-frey/gps-server.git
 ```
+Move the gps-server directory to your desired location, for example /var/apps
 
 #### Setup a MySQL Database
 
