@@ -29,7 +29,7 @@ If you don't need InfluxDB or MySQL, simply remove all references to either one 
 #### Get the files
 
 ```
-$ wget https://github.com/invite-frey/gps-server.git
+$ git clone https://github.com/invite-frey/gps-server.git
 ```
 Move the gps-server directory to your desired location, for example /var/apps
 
