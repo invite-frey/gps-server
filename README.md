@@ -53,19 +53,10 @@ $ mysql -u youruser -p gps < db_schema.sql
 
 #### If you are using daemontools:
 
-* Update the files in service/env to match your own setup
-* Link the service directory to your system's service directory
-
-```
-$ ln -s /path/to/git-package/service /etc/service/gps-server
-```
-* Check that the service is running (up more than a few seconds)
-
-```
-$ sudo svstat /etc/service/gps-server
-[sudo] password for xxx: 
-/etc/service/gps-server: up (pid 28000) 19770527 seconds
-```
+* The service directory is provided as an example.
+* Clone the directory into your desired location (do not link the git repo directory directly to prevent confidential information being committed into your repo).
+* Make the required changes to the service/env directory.
+* Link the cloned service directory to your system's service directory watched by daemontools. 
 
 #### You can also start the server from any terminal:
 
